@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Conversations from "./Conversations";
 import LoginForm from "./LoginForm";
 import "../styles/MainPage.css";
@@ -13,10 +13,14 @@ function MainPage(props: any) {
   const [userAuth, setUserAuth] = useState(false);
   const [userName, setUserName] = useState();
 
+  useEffect(() => {
+    userAuth ? setUserName(userName) : setUserName(undefined);
+  }, [userAuth, userName]);
+
   if (userAuth) {
     return (
       <div className="Conversations-page">
-        <Conversations user={userName} />
+        <Conversations user={userName} authSetter={setUserAuth} />
       </div>
     );
   }

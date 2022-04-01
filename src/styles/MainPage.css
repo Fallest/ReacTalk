@@ -49,6 +49,22 @@
   height: 100vh;
 }
 
+.exit-button {
+  float: left;
+  margin-top: 5%;
+  margin-left: 5%;
+  color: aqua;
+  border-color: aqua;
+  background-color: transparent;
+  border-radius: 100%;
+  border-width: 1%;
+
+  width: 4vw;
+  height: 4vw;
+  text-align: center;
+  font-size: 2vw;
+}
+
 .Friend-list-section h2 {
   position: static;
   left: 0;
@@ -120,7 +136,7 @@
   text-align: left;
   text-indent: 5%;
   margin: 0;
-  padding-top: 20px;
+  padding-top: 2%;
 }
 
 .Messages-box {
@@ -227,7 +243,8 @@
   .offline:hover {
     animation: offline-friend-illuminate 1 0.5s forwards;
   }
-  .send-button:hover {
+  .send-button:hover,
+  .exit-button:hover {
     animation: button-hover 1 0.5s forwards;
   }
   .login-button:hover {

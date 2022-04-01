@@ -15,7 +15,11 @@ function Conversations(props: any) {
 
   return (
     <div>
-      <FriendsPanel user={props.user} friendSetter={setCurrentFriend} />
+      <FriendsPanel
+        user={props.user}
+        authSetter={props.authSetter}
+        friendSetter={setCurrentFriend}
+      />
       <ChatPanel user={props.user} friend={currentFriend} />
     </div>
   );

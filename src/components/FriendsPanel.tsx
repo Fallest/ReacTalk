@@ -19,6 +19,12 @@ export default function FriendsPanel(props: any) {
 
   return (
     <div className="Friend-list-section">
+      <input
+        className="exit-button"
+        type="submit"
+        value="<"
+        onClick={(e) => props.authSetter(false)}
+      ></input>
       <h2>
         <sup>React</sup>
         Talk

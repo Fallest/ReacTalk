@@ -7,7 +7,7 @@ export default function MessageHolder(props: any) {
   // La variables messages contiene todas estas rows
   if (props.friend === "Welcome to ReacTalk") {
     msgs = [
-      <div className="user-message">Click on any friend</div>,
+      <div className="friend-message">Click on any friend</div>,
       <div className="user-message">And begin chatting!</div>,
     ];
   } else if (props.messages !== undefined) {

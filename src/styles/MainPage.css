@@ -127,6 +127,7 @@
   height: 75vh;
   width: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .friend-message {
@@ -134,7 +135,9 @@
   clear: both;
 
   text-align: left;
+  margin: 10px 50px;
   padding-left: 5%;
+  padding-right: 5%;
   padding-top: 10px;
   padding-bottom: 10px;
   border: 1px solid aqua;
@@ -167,8 +170,14 @@
   max-width: 40%;
 }
 
-.user-message:last-of-type {
+.user-message:last-of-type,
+.friend-message:last-of-type {
   margin-bottom: 30px;
+}
+
+.friend-message:first-of-type,
+.user-message:first-of-type {
+  margin-top: 20px;
 }
 
 .Message-sender {
@@ -227,6 +236,18 @@
   .Login-form h1 {
     animation: title-logo 1 2s forwards ease-in-out;
   }
+  .user-message {
+    animation: load-user-message 1 0.5s forwards;
+    transition-property: margin-right;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+  }
+  .friend-message {
+    animation: load-friend-message 1 0.5s forwards;
+    transition-property: margin-right;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+  }
 }
 
 /* Frames para las animaciones */
@@ -266,5 +287,35 @@
   }
   to {
     color: aqua;
+  }
+}
+
+@keyframes load-user-message {
+  from {
+    color: transparent;
+    border-color: transparent;
+    background-color: transparent;
+    margin-right: -50px;
+  }
+  to {
+    color: white;
+    border-color: aqua;
+    background-color: #282c34;
+    margin-right: 20px;
+  }
+}
+
+@keyframes load-friend-message {
+  from {
+    color: transparent;
+    border-color: transparent;
+    background-color: transparent;
+    margin-left: -50px;
+  }
+  to {
+    color: white;
+    border-color: aqua;
+    background-color: #282c34;
+    margin-left: 20px;
   }
 }

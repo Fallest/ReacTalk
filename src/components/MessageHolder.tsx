@@ -36,7 +36,7 @@ export default function MessageHolder(props: any) {
   }
   return (
     <div className="Message-holder">
-      <div className="chat-friend-name">
+      <div key={props.friend} className="chat-friend-name">
         <p>{props.friend}</p>
       </div>
       <div className="Messages-box">

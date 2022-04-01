@@ -13,7 +13,12 @@ export default function ChatPanel(props: any) {
         friend={props.friend}
         messages={messages}
       />
-      <MessageSender user={props.user} addMessage={setMessages} />
+      <MessageSender
+        user={props.user}
+        friend={props.friend}
+        prevMsgs={messages}
+        addMessage={setMessages}
+      />
     </div>
   );
 }

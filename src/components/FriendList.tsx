@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function FriendList(props: any) {
   const handleClick = (event: any) => {
-    props.friendSetter(props.user.friends[event.target.value].name);
+    props.friendSetter(event.target.id);
   };
 
   return (
@@ -17,7 +17,12 @@ export default function FriendList(props: any) {
       {props.user.friends.map((friend: any) => {
         if (friend.status === "online") {
           return (
-            <li className="online" key={friend.name} onClick={handleClick}>
+            <li
+              className="online"
+              key={friend.name}
+              id={friend.name}
+              onClick={(e) => handleClick(e)}
+            >
               {friend.name}
             </li>
           );

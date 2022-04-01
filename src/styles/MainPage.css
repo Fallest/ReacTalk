@@ -95,37 +95,44 @@
 }
 
 .Message-holder {
-  height: 85%;
+  position: relative;
+  top: 0;
+  height: 85vh;
   width: 100%;
   margin: 0;
   padding: 0;
+  top: 0;
 
   background-color: rgb(55, 69, 87);
   border-left: solid 3px aqua;
 }
 
-.Message-holder table {
-  height: 50px;
-  width: 100%;
-  font-size: 120%;
-}
-
-.Message-holder th {
+.chat-friend-name {
   background-color: #282c34;
   border-bottom: solid 3px aqua;
   height: 10vh;
-  padding: 0;
+  width: 70vw;
 }
 
-.chat-friend-name {
+.chat-friend-name p {
+  font-size: larger;
+  font-weight: bold;
   text-align: left;
   text-indent: 5%;
+  margin: 0;
+  padding-top: 20px;
+}
+
+.Messages-box {
+  height: 75vh;
+  width: 100%;
+  overflow-y: auto;
 }
 
 .friend-message {
-  position: relative;
-  top: 10px;
-  left: 5px;
+  float: left;
+  clear: both;
+
   text-align: left;
   padding-left: 5%;
   padding-top: 10px;
@@ -134,33 +141,43 @@
   border-radius: 50px;
   border-top-left-radius: 0px;
   background-color: #282c34;
-  max-width: 50%;
-  min-width: 50%;
+  overflow-wrap: anywhere;
+
+  width: fit-content;
+  max-width: 40%;
 }
 
 .user-message {
-  position: relative;
-  top: 10px;
-  right: 50px;
+  float: right;
+  clear: both;
+
   text-align: right;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin: 5px 50px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   padding-right: 5%;
+  padding-left: 5%;
   border: 1px solid aqua;
   border-radius: 50px;
   border-bottom-right-radius: 0px;
   background-color: #282c34;
-  max-width: 50%;
-  min-width: 50%;
+  overflow-wrap: anywhere;
+
+  width: fit-content;
+  max-width: 40%;
+}
+
+.user-message:last-of-type {
+  margin-bottom: 30px;
 }
 
 .Message-sender {
   position: relative;
   bottom: auto;
-  height: 15%;
+  height: 15vh;
 }
 
-.Message-sender form {
+.Message-sender div {
   height: 100%;
   width: 100%;
   padding-top: 3%;
@@ -171,6 +188,7 @@
   border-radius: 20px;
   width: 80%;
   height: 20%;
+  margin-top: 20px;
   margin-right: 20px;
   padding: 15px;
 
@@ -185,6 +203,11 @@
   border-color: aqua;
   background-color: transparent;
   border-radius: 100%;
+
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: medium;
 }
 
 /* Animaciones para la selección de un amigo */

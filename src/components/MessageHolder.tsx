@@ -5,57 +5,49 @@ export default function MessageHolder(props: any) {
 
   // Por cada mensaje que haya se crea una ROW de la tabla de mensajes.
   // La variables messages contiene todas estas rows
-  if (props.friend === "Bienvenido a ReacTalk") {
+  if (props.friend === "Welcome to ReacTalk") {
     msgs = [
-      <tr>
-        <td></td>
-        <td className="user-message">Haz click en algún amigo conectado</td>
-      </tr>,
-      <tr>
-        <td></td>
-        <td className="user-message">Y comienza a hablar!</td>
-      </tr>,
+      <div className="user-message">Click on any friend</div>,
+      <div className="user-message">And begin chatting!</div>,
     ];
   } else if (props.messages !== undefined) {
     // eslint-disable-next-line array-callback-return
-    props.messages.map((msg: { sender: string; text: string }) => {
-      if (msg.sender.toLowerCase() === props.user.toLowerCase()) {
-        msgs.push(
-          <tr>
-            <td></td>
-            <td className="user-message">{msg.text}</td>
-          </tr>
-        );
-      } else {
-        msgs.push(
-          <tr>
-            <td className="friend-message">{msg.text}</td>
-            <td></td>
-          </tr>
-        );
+    props.messages.map((msg: { from: string; to: string; text: string }) => {
+      /* Tratamiento de mensajes que envía el usuario:
+        -Hay que comprobar que el amigo al que van dirigidos estos mensajes es el actual.
+        -Y hay que comprobar que el mensaje viene del usuario.
+      */
+      if (
+        msg.to.toLowerCase() === props.friend.toLowerCase() &&
+        msg.from.toLowerCase() === props.user.toLowerCase()
+      ) {
+        msgs.push(<div className="user-message">{msg.text}</div>);
+      } else if (
+        msg.to.toLowerCase() === props.user.toLowerCase() &&
+        msg.from.toLowerCase() === props.friend.toLowerCase()
+      ) {
+        /* Tratamiento de mensajes que son enviados al usuario:
+        -Hay que comprobar que van dirigidos al usuario.
+        -Hay que comprobar que provienen del amigo actual.
+      */
+        msgs.push(<div className="friend-message">{msg.text}</div>);
       }
     });
   }
   return (
     <div className="Message-holder">
-      <table>
-        <thead>
-          <tr>
-            <th className="chat-friend-name" colSpan={2}>
-              {props.friend}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {msgs.length !== 0 ? (
-            msgs.map((msg) => {
-              return msg;
-            })
-          ) : (
-            <></>
-          )}
-        </tbody>
-      </table>
+      <div className="chat-friend-name">
+        <p>{props.friend}</p>
+      </div>
+      <div className="Messages-box">
+        {msgs.length !== 0 ? (
+          msgs.map((msg) => {
+            return msg;
+          })
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 }

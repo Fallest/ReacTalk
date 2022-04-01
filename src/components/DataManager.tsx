@@ -7,7 +7,7 @@ export default class DataManager {
     ["Delmer", "delm3r", "offline", "candelario,leo,cisco"],
     ["Candelario", "c4ndel", "online", "delmer,leo"],
     ["Leo", "le0", "offline", "delmer,candelario,cisco"],
-    ["Cisco", "c1sc0", "offline", "decmer,leo,amadeo"],
+    ["Cisco", "c1sc0", "online", "decmer,leo,amadeo"],
     ["Amadeo", "4m4deo", "online", "cisco"],
   ];
 

@@ -11,7 +11,7 @@ import { useState } from "react";
  */
 
 function Conversations(props: any) {
-  const [currentFriend, setCurrentFriend] = useState("Bienvenido a ReacTalk");
+  const [currentFriend, setCurrentFriend] = useState("Welcome to ReacTalk");
 
   return (
     <div>

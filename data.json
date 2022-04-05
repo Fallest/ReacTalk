@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "userName": "Delmer",
+      "pwd": "delm3r",
+      "status": "online",
+      "friends": "candelario,leo,cisco"
+    },
+    {
+      "id": 1,
+      "userName": "Candelario",
+      "pwd": "c4ndel",
+      "status": "online",
+      "friends": "delmer,leo"
+    },
+    {
+      "id": 2,
+      "userName": "Leo",
+      "pwd": "le0",
+      "status": "online",
+      "friends": "delmer,candelario,cisco"
+    },
+    {
+      "id": 3,
+      "userName": "Cisco",
+      "pwd": "c1sc0",
+      "status": "offline",
+      "friends": "delmer,leo,amadeo"
+    },
+    {
+      "id": 4,
+      "userName": "Amadeo",
+      "pwd": "4m4deo",
+      "status": "offline",
+      "friends": "cisco"
+    }
+  ]
+}

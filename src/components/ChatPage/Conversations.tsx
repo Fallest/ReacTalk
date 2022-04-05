@@ -1,7 +1,8 @@
 import * as React from "react";
-import FriendsPanel from "./FriendsPanel";
-import ChatPanel from "./ChatPanel";
+import FriendsPanel from "./FriendListSection/FriendsPanel";
+import ChatPanel from "./ChatSection/ChatPanel";
 import { useState } from "react";
+import "./Conversations.css";
 
 /**
  * Componente raíz para mostrar todos los componentes una vez iniciada la sesión.
@@ -14,7 +15,7 @@ function Conversations(props: any) {
   const [currentFriend, setCurrentFriend] = useState("Welcome to ReacTalk");
 
   return (
-    <div>
+    <div className="Conversations-page">
       <FriendsPanel
         user={props.user}
         authSetter={props.authSetter}

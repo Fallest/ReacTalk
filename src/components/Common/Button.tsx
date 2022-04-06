@@ -6,7 +6,11 @@ export default function Button(props: {
   cssClass: string;
 }) {
   return (
-    <button type="button" onClick={props.action} className={props.cssClass}>
+    <button
+      type="button"
+      onClick={(e: any) => props.action(e)}
+      className={props.cssClass}
+    >
       {props.text}
     </button>
   );

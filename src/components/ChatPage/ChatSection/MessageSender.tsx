@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
+import Button from "../../Common/Button";
+import TextInput from "../../Common/TextInput";
 
 /**
  * Envía los mensajes a ChatPanel.
@@ -29,19 +31,15 @@ export default function MessageSender(props: any) {
 
   return (
     <div className="Message-sender">
-      <input
+      <TextInput
+        label=""
         type="text"
-        className="msg-box"
-        value={msgText}
-        onChange={(e) => setMsgText(e.target.value)}
-        onKeyDown={(e) => (e.key === "Enter" ? handleSubmit(e) : undefined)}
+        actionOnChange={(e: any) => setMsgText(e.target.value)}
+        actionOnSubmit={handleSubmit}
+        useValue={msgText}
+        cssClass="msg-box"
       />
-      <input
-        type="submit"
-        className="send-button"
-        onClick={handleSubmit}
-        value=">"
-      ></input>
+      <Button action={handleSubmit} cssClass="send-button" text=">" />
     </div>
   );
 }

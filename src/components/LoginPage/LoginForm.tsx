@@ -33,6 +33,9 @@ export default function LoginForm(props: any) {
         }
       );
     }
+    if (search) {
+      tryLogin();
+    }
   }, [search]);
 
   const handleUserChange = (event: any) => {
@@ -53,13 +56,17 @@ export default function LoginForm(props: any) {
           label="User"
           type="text"
           actionOnChange={handleUserChange}
+          actionOnSubmit={() => setSearch(true)}
           useValue={userName}
+          cssClass=""
         />
         <TextInput
           label="Password"
           type="password"
           actionOnChange={handlePwdChange}
+          actionOnSubmit={() => setSearch(true)}
           useValue={pwd}
+          cssClass=""
         />
         <Button
           action={() => setSearch(true)}

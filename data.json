@@ -4,21 +4,21 @@
       "id": 0,
       "userName": "Delmer",
       "pwd": "delm3r",
-      "status": "online",
+      "status": "offline",
       "friends": "candelario,leo,cisco"
     },
     {
       "id": 1,
       "userName": "Candelario",
       "pwd": "c4ndel",
-      "status": "online",
+      "status": "offline",
       "friends": "delmer,leo"
     },
     {
       "id": 2,
       "userName": "Leo",
       "pwd": "le0",
-      "status": "online",
+      "status": "offline",
       "friends": "delmer,candelario,cisco"
     },
     {

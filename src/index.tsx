@@ -4,10 +4,10 @@ import "./components/MainPage/MainPage.css";
 import MainPage from "./components/MainPage/MainPage";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <body className="App App-style">
+  <div className="App App-style">
+    <React.StrictMode>
       <MainPage />
-    </body>
-  </React.StrictMode>,
+    </React.StrictMode>
+  </div>,
   document.getElementById("root")
 );

@@ -96,21 +96,19 @@
 .Message-sender {
   position: relative;
   bottom: auto;
-  height: 15vh;
+  height: 15%;
+  width: 100%;
 }
 
 .Message-sender div {
-  height: 100%;
-  width: 100%;
-  padding-top: 3%;
-  padding-bottom: 3%;
+  display: inline;
 }
 
 .msg-box {
   border-radius: 20px;
   width: 80%;
   height: 20%;
-  margin-top: 20px;
+  margin-top: 30px;
   margin-right: 20px;
   padding: 15px;
 

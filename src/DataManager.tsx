@@ -53,7 +53,7 @@ export default class DataManager {
    *
    * @param userName
    */
-  static async getFriends(userName: string) {
+  static async getFriends(userName: string): Promise<IUser[] | undefined> {
     return await DataManager.fetchAllData().then((data) => {
       return data
         .map((user) => {
@@ -88,7 +88,6 @@ export default class DataManager {
           user.status = "online";
           fetch("http://localhost:5000/users/" + user.id, {
             method: "PUT",
-            mode: "cors",
             body: JSON.stringify(user),
             headers: {
               "Content-Type": "application/json",
@@ -102,11 +101,20 @@ export default class DataManager {
     );
   }
 
-  static logOut(userName: string) {
-    DataManager.fetchAllData().then((data) =>
-      data.map((user) => {
+  static async logOut(userName: string) {
+    return await DataManager.fetchAllData().then((data) =>
+      data.map((user: IUser) => {
         if (user.userName.toLowerCase() === userName.toLowerCase()) {
           user.status = "offline";
+          fetch("http://localhost:5000/users/" + user.id, {
+            method: "PUT",
+            body: JSON.stringify(user),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => console.log(response))
+            .catch((error) => console.log("An error ocurred: " + error));
           return;
         }
       })

@@ -15,7 +15,7 @@ function MainPage(props: any) {
   // If the user has been authenticated, store their name in userName state.
   useEffect(() => {
     userAuth ? setUserName(userName) : setUserName(undefined);
-  }, [userAuth, userName]);
+  }, [userAuth]);
 
   // If the user is authenticated, render the chat.
   if (userAuth) {

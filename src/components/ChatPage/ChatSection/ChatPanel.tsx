@@ -5,20 +5,21 @@ import MessageSender from "./MessageSender";
 import "./Chat.css";
 
 export default function ChatPanel(props: any) {
-  const [messages, setMessages] = useState();
+  const [msgCount, setMsgCount] = useState(0);
 
   return (
     <div className="Chat-panel">
       <MessageHolder
         user={props.user}
         friend={props.friend}
-        messages={messages}
+        setMsgCount={setMsgCount}
+        msgCount={msgCount}
       />
       <MessageSender
         user={props.user}
         friend={props.friend}
-        prevMsgs={messages}
-        addMessage={setMessages}
+        prevMsgCount={msgCount}
+        setMsgCount={setMsgCount}
       />
     </div>
   );

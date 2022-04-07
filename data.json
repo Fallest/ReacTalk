@@ -4,21 +4,21 @@
       "id": 0,
       "userName": "Delmer",
       "pwd": "delm3r",
-      "status": "offline",
+      "status": "online",
       "friends": "candelario,leo,cisco"
     },
     {
       "id": 1,
       "userName": "Candelario",
       "pwd": "c4ndel",
-      "status": "offline",
+      "status": "online",
       "friends": "delmer,leo"
     },
     {
       "id": 2,
       "userName": "Leo",
       "pwd": "le0",
-      "status": "offline",
+      "status": "online",
       "friends": "delmer,candelario,cisco"
     },
     {
@@ -34,6 +34,116 @@
       "pwd": "4m4deo",
       "status": "offline",
       "friends": "cisco"
+    }
+  ],
+  "messages": [
+    {
+      "id": 0,
+      "from": "candelario",
+      "to": "delmer",
+      "text": "Hello Delmer"
+    },
+    {
+      "id": 1,
+      "from": "candelario",
+      "to": "leo",
+      "text": "Hello leo"
+    },
+    {
+      "id": 2,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "ask me now"
+    },
+    {
+      "id": 3,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "4545+"
+    },
+    {
+      "id": 4,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "show"
+    },
+    {
+      "id": 5,
+      "from": "Leo",
+      "to": "Candelario",
+      "text": "if the"
+    },
+    {
+      "id": 6,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "a"
+    },
+    {
+      "id": 7,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "PATAQTA"
+    },
+    {
+      "id": 8,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "aaaaaaaaaa"
+    },
+    {
+      "id": 9,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "AAAAAAAAAAAAAAAA"
+    },
+    {
+      "id": 10,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "aaaaaaaaaaaaaa"
+    },
+    {
+      "id": 11,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "only"
+    },
+    {
+      "id": 12,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "1"
+    },
+    {
+      "id": 13,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "asd"
+    },
+    {
+      "id": 14,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "awerg v"
+    },
+    {
+      "id": 15,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "asdasdasd"
+    },
+    {
+      "id": 16,
+      "from": "Candelario",
+      "to": "Leo",
+      "text": "ses"
+    },
+    {
+      "id": 17,
+      "from": "Leo",
+      "to": "Candelario",
+      "text": "PELEalskdjas"
     }
   ]
 }

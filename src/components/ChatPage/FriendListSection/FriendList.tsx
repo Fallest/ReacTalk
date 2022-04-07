@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Muestra la lista de amigos.
@@ -13,7 +13,7 @@ export default function FriendList(props: any) {
     props.friendSetter(event.target.id);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function renderFriends() {
       let res: Array<JSX.Element> = new Array(0);
       await props.user.friends.then(

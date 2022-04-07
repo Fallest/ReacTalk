@@ -1,17 +1,57 @@
 /* eslint-disable array-callback-return */
+
+import { prependOnceListener } from "process";
+
 /**
  * Clase para leer y escribir datos en los archivos de usuario.
  */
-interface IUser {
+export interface IUser {
   id: number;
   userName: string;
   pwd: string;
   status: string;
   friends: string;
 }
+export interface IMessage {
+  id: number;
+  from: string;
+  to: string;
+  text: string;
+}
 
 export default class DataManager {
-  static fetchAllData = async () => {
+  static async postMessage(msg: IMessage) {
+    await fetch("http://localhost:5000/messages?", {
+      method: "POST",
+      body: JSON.stringify(msg),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+  static async fetchMessages(userName: string, friendName: string) {
+    let res: Array<IMessage> = Array(0);
+    const response = await fetch("http://localhost:5000/messages?");
+    const jsonData = await response.json();
+
+    const keys = Object.keys(jsonData);
+
+    keys.forEach((e) => {
+      let data = jsonData[e] as IMessage;
+      if (
+        (data.from.toLowerCase() === userName.toLowerCase() ||
+          data.to.toLowerCase() === userName.toLowerCase()) &&
+        (data.from.toLowerCase() === friendName.toLowerCase() ||
+          data.to.toLowerCase() === friendName.toLowerCase())
+      ) {
+        res.push(data);
+      }
+    });
+
+    return res;
+  }
+
+  static fetchAllUserData = async () => {
     let res: Array<IUser> = [];
     const response = await fetch("http://localhost:5000/users?");
     const jsonData = await response.json();
@@ -32,12 +72,13 @@ export default class DataManager {
   static async checkCredentials(user: string, pwd: string) {
     let valid = false;
 
-    await DataManager.fetchAllData().then((data) =>
-      data.forEach((u: IUser) => {
-        console.log(u);
+    await DataManager.fetchAllUserData().then((data) =>
+      data.map((u: IUser) => {
         if (u.userName.toLowerCase() === user.toLowerCase() && u.pwd === pwd) {
+          console.log(u);
           console.log("User " + u.userName + " found. Proceeding to log in...");
           valid = true;
+
           return;
         }
       })
@@ -54,7 +95,7 @@ export default class DataManager {
    * @param userName
    */
   static async getFriends(userName: string): Promise<IUser[] | undefined> {
-    return await DataManager.fetchAllData().then((data) => {
+    return await DataManager.fetchAllUserData().then((data) => {
       return data
         .map((user) => {
           // Si encontramos el usuario
@@ -82,7 +123,7 @@ export default class DataManager {
   }
 
   static async logIn(userName: string) {
-    return await DataManager.fetchAllData().then((data) =>
+    return await DataManager.fetchAllUserData().then((data) =>
       data.map((user: IUser) => {
         if (user.userName.toLowerCase() === userName.toLowerCase()) {
           user.status = "online";
@@ -102,7 +143,7 @@ export default class DataManager {
   }
 
   static async logOut(userName: string) {
-    return await DataManager.fetchAllData().then((data) =>
+    return await DataManager.fetchAllUserData().then((data) =>
       data.map((user: IUser) => {
         if (user.userName.toLowerCase() === userName.toLowerCase()) {
           user.status = "offline";

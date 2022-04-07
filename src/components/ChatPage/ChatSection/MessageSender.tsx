@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import DataManager, { IMessage } from "../../../DataManager";
 import Button from "../../Common/Button";
 import TextInput from "../../Common/TextInput";
 
@@ -11,20 +12,23 @@ import TextInput from "../../Common/TextInput";
 export default function MessageSender(props: any) {
   const [msgText, setMsgText] = useState("");
 
-  function handleSubmit(event: any) {
+  async function handleSubmit(event: any) {
     if (
       msgText !== "" &&
       msgText.trim() !== "" &&
       props.friend !== "Welcome to ReacTalk"
     ) {
-      props.prevMsgs !== undefined
-        ? props.addMessage([
-            ...props.prevMsgs,
-            { from: props.user, to: props.friend, text: msgText },
-          ])
-        : props.addMessage([
-            { from: props.user, to: props.friend, text: msgText },
-          ]);
+      // Post message in JSON.
+      let newMsg: IMessage = {
+        id: props.prevMsgCount + 1,
+        from: props.user,
+        to: props.friend,
+        text: msgText,
+      };
+
+      await DataManager.postMessage(newMsg).then(() =>
+        props.setMsgCount(props.prevMsgCount + 1)
+      );
     }
     setMsgText("");
   }

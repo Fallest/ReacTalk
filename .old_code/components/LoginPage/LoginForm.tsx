@@ -1,8 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
-import DataManager from "../../DataManager";
-import Button from "../Common/Button";
-import TextInput from "../Common/TextInput";
+import Button from "../../../client/src/components/button";
 import "./LoginForm.css";
 /**
  * Componente para el formulario de inicio de sesión.
@@ -14,6 +10,7 @@ import "./LoginForm.css";
  *      >Si el usuario existe pero está online: Error:
  *      >Si el usuario existe y está offline: Iniciar sesión.
  */
+/*
 export default function LoginForm(props: any) {
   const [userName, setUserName] = useState("");
   const [pwd, setPwd] = useState("");
@@ -77,3 +74,4 @@ export default function LoginForm(props: any) {
     </div>
   );
 }
+*/

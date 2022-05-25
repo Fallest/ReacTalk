@@ -1,4 +1,4 @@
 build/
 node_modules/
-old_code/
+.old_code/
 tsconfig.json

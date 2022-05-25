@@ -1,0 +1,2 @@
+Usar el contexto en el router para:
+	-Controlar que un usuario logeado no pueda entrar ni en Login ni en Register.

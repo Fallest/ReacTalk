@@ -1,5 +1,12 @@
 import { useState } from "react";
 
+/**
+ * Allows reusability and cleaner code when using forms.
+ *
+ * @param callback A callback function that will be called when onSubmit is called.
+ * @param initialState The initial state of the values.
+ * @returns onChange, onSubmit functions, and the values.
+ */
 export const useForm = (callback: any, initialState = {}) => {
   const [values, setValues] = useState(initialState);
 

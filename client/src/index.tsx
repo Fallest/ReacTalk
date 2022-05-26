@@ -7,6 +7,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/authContext";
+import { Container } from "@mui/material";
 
 /**
  * Our react app needss access to:
@@ -21,7 +22,16 @@ root.render(
     <ApolloProvider client={client}>
       <BrowserRouter>
         <React.StrictMode>
-          <App />
+          <Container
+            sx={{
+              minWidth: "100vw",
+              minHeight: "100vh",
+              backgroundColor: "#282c34",
+              clear: "both",
+            }}
+          >
+            <App />
+          </Container>
         </React.StrictMode>
       </BrowserRouter>
     </ApolloProvider>

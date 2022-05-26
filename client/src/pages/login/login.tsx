@@ -1,20 +1,31 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../../context/authContext";
-import { useForm } from "../../utils/hooks";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
-import { gql } from "graphql-tag";
-import { GraphQLError } from "graphql";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import {
+  Alert,
+  Button,
+  Container,
+  Stack,
+  TextField,
+  Link,
+  Typography,
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 
-import { useNavigate } from "react-router-dom";
+import { gql } from "graphql-tag";
 
-import { TextField, Button, Container, Stack, Alert } from "@mui/material";
-import "./login-style.css";
+import { Logo } from "../../components/logo";
+import { AuthContext } from "../../context/authContext";
+import { useForm } from "../../utils/hooks";
+import { ArrowForward } from "@mui/icons-material";
 
+/**
+ * Create a GraphQL mutation, so it can be later used to log in the user.
+ */
 const LOGIN_USER = gql`
   mutation login($loginInput: LoginInput) {
     loginUser(loginInput: $loginInput) {
@@ -26,6 +37,12 @@ const LOGIN_USER = gql`
 `;
 
 function Login(props: any) {
+  /**
+   * navigate is used to move around routes.
+   *
+   * context has the login function that creates a JWT and stores it in localStorage:
+   *  the user is NOT validated inside the context, the user is validated before that.
+   */
   let navigate = useNavigate();
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
@@ -35,11 +52,22 @@ function Login(props: any) {
     loginUser();
   }
 
+  /**
+   * Using the useForm hook allows to update TextInput's values with cleaner code.
+   */
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
     email: "",
     password: "",
   });
 
+  /**
+   * The useMutation hook is used to access data from the database like so:
+   *  -A mutation type (declared in graphql/typeDefs.ts and uses the resolvers
+   *    on graphql/resolvers/users.ts) is used when creating the mutation LOGIN_USER.
+   *  -useMutation returns the resolver function, which will validate the user info.
+   *  -If the mutation is successful and performs an update, the login function on the
+   *    context will be called, and the page will be forwarded to the chatss page.
+   */
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, { data: { loginUser: userData } }) {
       context.login(userData);
@@ -68,33 +96,29 @@ function Login(props: any) {
       className="Login"
       maxWidth="sm"
       sx={{
-        textAlign: "center",
-        position: "relative",
+        display: "flex",
+        flexFlow: "column",
+        alignItems: "center",
         width: "50vw",
-        height: "30vh",
       }}
     >
-      <h1
-        style={{
-          fontSize: "80px",
-          color: "aqua",
-        }}
-      >
-        <sup>React</sup>Talk
-      </h1>
+      <Logo />
       {/**
        * Login form.
        */}
       <Stack
-        spacing={2}
-        paddingBottom={2}
         className="Login-form"
         sx={{
+          display: "flex",
+          flexFlow: "column",
+          rowGap: 2,
           backgroundColor: "white",
+          width: "70%",
           margin: "20px",
           border: "solid cyan 5px",
           borderRadius: "20px",
-          padding: "30px",
+          px: "60px",
+          pt: "60px",
         }}
       >
         <TextField label="Email" name="email" onChange={onChange} />
@@ -123,53 +147,55 @@ function Login(props: any) {
             ),
           }}
         />
+        <Button
+          variant="contained"
+          onClick={onSubmit}
+          sx={{
+            maxWidth: "30%",
+            alignSelf: "flex-end",
+            fontFamily: "Cantarell",
+            cursor: "pointer",
+            backgroundColor: "#316e70",
+            mb: "auto",
+            ":hover": {
+              backgroundColor: "aqua",
+              color: "black",
+            },
+          }}
+        >
+          Login&nbsp;
+          <ArrowForward fontSize="small" />
+        </Button>
+
+        <Link
+          onClick={handleRegisterClick}
+          sx={{
+            justifySelf: "flex-end",
+            textDecoration: "none",
+            color: "#908787",
+            borderColor: "#575757",
+            fontSize: "18px",
+            lineHeight: "25px",
+            ":hover": {
+              textDecoration: "underline",
+              cursor: "pointer",
+            },
+          }}
+        >
+          <Typography>I don't have an account, register me!</Typography>
+        </Link>
       </Stack>
 
       {/**
        * Error alerts.
        */}
-      {errors.map(function(error) {
+      {errors.map(function(error: any) {
         return (
           <Alert sx={{ my: "10px" }} severity="error">
             {error.message}
           </Alert>
         );
       })}
-
-      {/**
-       * Login button.
-       */}
-      <Button
-        variant="outlined"
-        onClick={onSubmit}
-        className="login-button"
-        sx={{
-          width: "90%",
-          fontFamily: "Cantarell",
-          cursor: "pointer",
-        }}
-      >
-        Login
-      </Button>
-
-      {/**
-       * Register button.
-       */}
-      <Button
-        size="small"
-        sx={{
-          color: "#908787",
-          borderColor: "#575757",
-          fontSize: "18px",
-          lineHeight: "25px",
-          width: "90%",
-          mt: "10px",
-        }}
-        variant="outlined"
-        onClick={handleRegisterClick}
-      >
-        Register
-      </Button>
     </Container>
   );
 }

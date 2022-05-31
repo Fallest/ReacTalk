@@ -1,18 +1,23 @@
 import React from "react";
 import "./logoani.css";
+import { Typography } from "@mui/material";
 
-export const Logo: React.FC = (props) => {
+type LogoProps = {
+  size: number;
+};
+
+export const Logo: React.FC<LogoProps> = (props) => {
   return (
-    <h1
+    <Typography
       className="logo"
-      style={{
-        fontSize: "80px",
+      fontSize={props.size}
+      sx={{
         color: "aqua",
-        padding: 0,
-        margin: 0,
+        p: 0,
+        m: 0,
       }}
     >
       <sup>React</sup>Talk
-    </h1>
+    </Typography>
   );
 };

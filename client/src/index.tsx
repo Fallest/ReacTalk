@@ -5,6 +5,7 @@ import App from "./App";
 import client from "./apolloClient";
 import { ApolloProvider } from "@apollo/react-hooks";
 
+import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/authContext";
 import { Container } from "@mui/material";
@@ -23,11 +24,11 @@ root.render(
       <BrowserRouter>
         <React.StrictMode>
           <Container
+            disableGutters
             sx={{
               minWidth: "100vw",
               minHeight: "100vh",
               backgroundColor: "#282c34",
-              clear: "both",
             }}
           >
             <App />

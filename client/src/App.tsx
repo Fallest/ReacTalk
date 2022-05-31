@@ -1,8 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Homepage from "./pages/homepage";
-import Register from "./pages/login/register";
-import Login from "./pages/login/login";
+import Register from "./pages/authentication/register";
+import Login from "./pages/authentication/login";
+import Chats from "./pages/user/chats";
+import Profile from "./pages/user/profile";
 
 /**
  * Here we have our routes, where all pages will be linked with one another.
@@ -22,8 +23,8 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/chats" element={<Homepage />} />
-      <Route path="/profile" element={<Homepage />} />
+      <Route path="/chats" element={<Chats />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }

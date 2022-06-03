@@ -45,17 +45,17 @@ module.exports = {
         ...res._doc,
       };
     },
-    async loginUser(_: any, { loginInput: { email, password } }: any) {
+    async loginUser(_: any, { loginInput: { username, password } }: any) {
       /* Do input validation
             if (!(email && password)) {
                 res.status(400).send("All input is required");
             }
             */
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ username });
 
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
-        const token = jwt.sign({ user_id: user._id, email }, "UNSAFESTRING", {
+        const token = jwt.sign({ user_id: user._id, username }, "UNSAFESTRING", {
           expiresIn: "2h",
         });
 

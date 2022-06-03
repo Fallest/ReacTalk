@@ -16,7 +16,7 @@ module.exports = gql`
   }
 
   input LoginInput {
-    email: String
+    username: String
     password: String
   }
 

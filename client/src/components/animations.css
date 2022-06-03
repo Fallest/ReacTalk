@@ -1,0 +1,75 @@
+@media (prefers-reduced-motion: no-preference) {
+  .logo-fade-in {
+    animation: logo-fade-in 1 2s forwards ease-in-out;
+  }
+  .login-fade-in {
+    animation: login-fade-in 1 2s forwards ease-in-out;
+  }
+  .border-around {
+    border-radius: 100%;
+    animation: border-around 1s infinite linear;
+  }
+}
+
+@keyframes login-fade-in {
+  0% {
+    width: 0%;
+    background-color: transparent;
+    color: transparent;
+  }
+  50% {
+    width: 30vw;
+    background-color: transparent;
+    color: transparent;
+  }
+  100% {
+    width: 40vw;
+    background-color: whtie;
+    color: inherit;
+  }
+}
+
+@keyframes border-around {
+  0%, 100% {
+    border-left: 2px solid aqua;
+    border-top: 2px solid aqua;
+    border-right: 2px solid rgba(0, 255, 255, 0.25);
+    border-bottom: 2px solid rgba(0, 255, 255, 0.50);
+  }
+  25% {
+    border-left: 2px solid rgba(0, 255, 255, 0.50);
+    border-top: 2px solid aqua;
+    border-right: 2px solid aqua;
+    border-bottom: 2px solid rgba(0, 255, 255, 0.25);
+  }
+  50% {
+    border-left: 2px solid rgba(0, 255, 255, 0.25);
+    border-top: 2px solid rgba(0, 255, 255, 0.50);
+    border-right: 2px solid aqua;
+    border-bottom: 2px solid aqua;
+  }
+  75% {
+    border-left: 2px solid aqua;
+    border-top: 2px solid rgba(0, 255, 255, 0.25);
+    border-right: 2px solid rgba(0, 255, 255, 0.50);
+    border-bottom: 2px solid aqua;
+  }
+}
+
+@keyframes logo-fade-in {
+  0% {
+    width: 100%;
+    background-color: transparent;
+    color: transparent;
+  }
+  50% {
+    background-color: transparent;
+    color: transparent;
+  }
+  100% {
+    border: none;
+    width: 100%;
+    background-color: inherit;
+    color: aqua;
+  }
+}

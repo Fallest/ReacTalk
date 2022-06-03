@@ -1,5 +1,5 @@
 import React from "react";
-import "./logoani.css";
+import "./animations.css";
 import { Typography } from "@mui/material";
 
 type LogoProps = {
@@ -9,15 +9,16 @@ type LogoProps = {
 export const Logo: React.FC<LogoProps> = (props) => {
   return (
     <Typography
-      className="logo"
+      className="logo-fade-in"
       fontSize={props.size}
       sx={{
+        textAlign: "center",
         color: "aqua",
-        p: 0,
-        m: 0,
+        p: 3,
+        mt: 3,
       }}
     >
-      <sup>React</sup>Talk
+      <sup className="border-around">React</sup>Talk
     </Typography>
   );
 };

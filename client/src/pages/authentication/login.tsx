@@ -22,6 +22,7 @@ import { Logo } from "../../components/logo";
 import { AuthContext } from "../../context/authContext";
 import { useForm } from "../../utils/hooks";
 import { ArrowForward } from "@mui/icons-material";
+import "../../components/animations.css";
 
 /**
  * Create a GraphQL mutation, so it can be later used to log in the user.
@@ -56,7 +57,7 @@ function Login(props: any) {
    * Using the useForm hook allows to update TextInput's values with cleaner code.
    */
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -101,13 +102,14 @@ function Login(props: any) {
 
   return (
     <Container
-      className="Login"
+      className="login-fade-in"
       maxWidth="sm"
       sx={{
         display: "flex",
         flexFlow: "column",
         alignItems: "center",
         width: "50vw",
+        zIndex: 1
       }}
     >
       <Logo size={80} />
@@ -115,7 +117,6 @@ function Login(props: any) {
        * Login form.
        */}
       <Stack
-        className="Login-form"
         sx={{
           display: "flex",
           flexFlow: "column",
@@ -129,7 +130,7 @@ function Login(props: any) {
           pt: "60px",
         }}
       >
-        <TextField label="Email" name="email" onChange={onChange} />
+        <TextField label="Username" name="username" onChange={onChange} />
         <TextField
           label="Password"
           name="password"
@@ -190,7 +191,11 @@ function Login(props: any) {
             },
           }}
         >
-          <Typography>I don't have an account, register me!</Typography>
+          <Typography
+            variant="body1"
+            fontSize="20px"
+            my={3}
+          >I don't have an account, register me!</Typography>
         </Link>
       </Stack>
 

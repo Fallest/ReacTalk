@@ -102,14 +102,13 @@ function Login(props: any) {
 
   return (
     <Container
-      className="login-fade-in"
       maxWidth="sm"
       sx={{
         display: "flex",
         flexFlow: "column",
         alignItems: "center",
         width: "50vw",
-        zIndex: 1
+        zIndex: 1,
       }}
     >
       <Logo size={80} />
@@ -117,6 +116,7 @@ function Login(props: any) {
        * Login form.
        */}
       <Stack
+        className="logo-fade-in border-around"
         sx={{
           display: "flex",
           flexFlow: "column",
@@ -124,7 +124,6 @@ function Login(props: any) {
           backgroundColor: "white",
           width: "70%",
           margin: "20px",
-          border: "solid cyan 5px",
           borderRadius: "20px",
           px: "60px",
           pt: "60px",
@@ -191,11 +190,9 @@ function Login(props: any) {
             },
           }}
         >
-          <Typography
-            variant="body1"
-            fontSize="20px"
-            my={3}
-          >I don't have an account, register me!</Typography>
+          <Typography variant="body1" fontSize="20px" my={3}>
+            I don't have an account, register me!
+          </Typography>
         </Link>
       </Stack>
 

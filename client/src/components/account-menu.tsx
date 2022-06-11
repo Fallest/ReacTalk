@@ -29,6 +29,10 @@ export default function AccountMenu() {
     navigate("/login");
   };
 
+  const toProfile = () => {
+    navigate("/profile");
+  };
+
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -78,7 +82,7 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
+        <MenuItem onClick={toProfile}>
           <AccountCircleIcon /> Profile
         </MenuItem>
         <Divider />

@@ -5,10 +5,16 @@ import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/authContext";
 
-import { Container, Typography, Box, Divider } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 
 import { Logo } from "./logo";
 
+/**
+ * Sidebar component for the chats page.
+ * Has a search bar to search for alreaddy added friends, and start chats with them.
+ * Has a button to add a new friend (search uses username or email)
+ * Shows all the friends with open chats.
+ */
 export const Sidebar: FC = () => {
   const { user } = useContext(AuthContext);
 

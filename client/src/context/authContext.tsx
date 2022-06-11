@@ -1,9 +1,12 @@
 import jwtDecode from "jwt-decode";
 import React, { useReducer, createContext } from "react";
+import type { User } from '../types/user'; 
 
 // Create the initial state
 const initialState = {
   user: null,
+  chat: null,
+  message: null,
 };
 
 /**
@@ -31,6 +34,9 @@ const AuthContext = createContext({
   user: null,
   login: (userData: any) => {},
   logout: () => {},
+  addFriend: (friendName: string) => {},
+  createChat: (chatName: string, users: any) => {},
+  sendMessage: (toChat: string, sender: any, content: string) => {},
 });
 
 /**
@@ -43,10 +49,6 @@ const AuthContext = createContext({
  *
  * The actual login is performed in the Apollo Server, so no adicional
  * checks are performed here.
- *
- * @param {*} state
- * @param {type: any, payload: any} action
- * @returns
  */
 function authReducer(state: any, action: any) {
   switch (action.type) {
@@ -59,6 +61,21 @@ function authReducer(state: any, action: any) {
       return {
         ...state,
         user: null,
+      };
+    case "ADD_FRIEND":
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case "CREATE_CHAT":
+      return {
+        ...state,
+        chat: action.payload,
+      };
+    case "SEND_MESSAGE":
+      return {
+        ...state,
+        message: action.payload,
       };
     default:
       return state;

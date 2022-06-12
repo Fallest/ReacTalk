@@ -6,19 +6,6 @@ module.exports = gql`
     email: String
     password: String
     token: String
-    friends: User[]
-    chats: Chat[]
-  }       
-
-  type Chat {
-    name: String
-    users: User[]
-    messages: Message[]
-  }
-
-  type Message {
-    sender: User
-    content: String
   }
 
   input RegisterInput {
@@ -33,32 +20,68 @@ module.exports = gql`
     password: String
   }
 
-  input AddFriendInput {
-    friendData: String
+  input EditUsernameInput {
+    username: String
+  }
+
+  input EditEmailInput {
+    email: String
+  }
+
+  input EditPasswordInput {
+    password: String
+  }
+
+  type Chat {
+    name: String
+    users: [ID]
+    createdAt: String
   }
 
   input CreateChatInput {
     name: String
-    users: Chat[]
+    users: [ID]
+  }
+
+  input EditChatInput {
+    name: String
+    users: [ID]
+  }
+
+  type Message {
+    toChat: ID
+    sender: ID
+    content: String
+    createdAt: String
   }
 
   input SendMessageInput {
-    toChat: String
-    sender: User
+    toChat: ID
+    sender: ID
     content: String
   }
 
   type Mutation {
     registerUser(registerInput: RegisterInput): User
     loginUser(loginInput: LoginInput): User
-    addFriend(addFriendInput: AddFriendInput): User
-    createChat(createChatInput: CreateChatInput): Chat
-    sendMessage(sendMessageInput: SendMessageInput): Message
+    changeUsername(id: ID!, editUsernameInput: EditUsernameInput): Boolean
+    changeEmail(id: ID!, editEmailInput: EditEmailInput): Boolean
+    changePassword(id: ID!, editPasswordInput: EditPasswordInput): Boolean
+    deleteUser(id: ID!): Boolean
+
+    createChat(createChatInput: CreateChatInput): Chat!
+    editChat(id: ID!, editChatInput: EditChatInput): Boolean
+    deleteChat(id: ID!): Boolean
+
+    sendMessage(sendMessageInput: SendMessageInput): Message!
   }
 
   type Query {
     user(id: ID!): User
+    getUsers(userId: ID!): [String]
     chat(id: ID!): Chat
+    getChats(userId: ID!): [Chat]
     message(id: ID!): Message
+    getMessages(chatId: ID!): [Message]
   }
 `;

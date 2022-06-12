@@ -1,0 +1,62 @@
+The data is NOT directly related in the database.
+This works the following way:
+  A user has a username, email, pw and token.
+  A chat has a name, a list of users,
+    and a list of messages.
+  A message has a chat, sender, and content.
+
+A user CANNOT add friends. Instead, he can
+start a chat with ANYONE who is in a chat
+that the user themselves are a part of.
+That means that to know more people,
+the user first has to be know by other
+people, who would add the user to a chat,
+and therefore have more people to talk to.
+
+This means that a new user, who is not a
+part of any chat, has no one to talk to.
+
+Of course, the first roundabout to this 
+will be to add ALL new users to a chat
+that will harbour ALL users, until they 
+leave that chat willingly.
+
+A restrintion to avoid softlocking yourself
+will be added ("leaving the first chat
+after creating a new user" would be a softlock,
+since the user would know noone, and noone
+would know the user).
+
+A message would work as such:
+  A user sends a message in a chat:
+    The message scope will only be that chat,
+    so NOONE from outside will know about the 
+    message.
+
+The chats themselves store their name, a list of user IDs, and 
+a list of message IDs. Of course, those IDs should be encrypted,
+and onlyy be decipherable to those inside the chat, so that 
+anyone that looks at that information from the outside, only
+sees gibberish.
+
+A user can create a chat, and add anyone that the user knows (from
+other chats), that way, if user A has to friends: B and C,
+and A wants B and C to know eachother, A would create a chat
+with A, B, and C, so that B and C now know eachother.
+
+* Add graphical description here.
+
+Users, when leaving a chat, will be prompted of who they will
+"forget" after leaving. Users, when added to a chat, will Instead
+be invited to access those chats, so that no spam ocurrs. For the
+same reason, a user can decide to only receive chat invites from
+people they know.
+
+Ids:
+Chat 1: 62a616a996753304bd7e05a9
+Chat 2: 62a6177796753304bd7e05ae
+
+Users:
+Delmer: 6299da665f113c15ec30d943
+David: 628ee1aa35d22b3795099b33
+Estren: 62a6175e96753304bd7e05ac

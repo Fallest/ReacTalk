@@ -1,5 +1,5 @@
 import { ApolloServer, gql, UserInputError } from "apollo-server";
-import User from "../../models/User";
+import { User } from "../../models/index";
 import { ApolloError } from "apollo-server-errors";
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -10,11 +10,6 @@ module.exports = {
       _: any,
       { registerInput: { username, email, password } }: any
     ) {
-      /* Do input validation
-            if (!(email && password && first_name && last_name)) {
-                res.status(400).send("All input is required");
-            }
-            */
       const oldUser = await User.findOne({ email });
 
       if (oldUser) {
@@ -45,19 +40,21 @@ module.exports = {
         ...res._doc,
       };
     },
-    async loginUser(_: any, { loginInput: { username, password } }: any) {
-      /* Do input validation
-            if (!(email && password)) {
-                res.status(400).send("All input is required");
-            }
-            */
+    async loginUser(_, { loginInput: { username, password } }) {
       const user = await User.findOne({ username });
 
+      if (!(username && password)) {
+        user.status(400).send("All input is required");
+      }
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
-        const token = jwt.sign({ user_id: user._id, username }, "UNSAFESTRING", {
-          expiresIn: "2h",
-        });
+        const token = jwt.sign(
+          { user_id: user._id, username },
+          "UNSAFESTRING",
+          {
+            expiresIn: "2h",
+          }
+        );
 
         // save user token
         user.token = token;
@@ -70,8 +67,49 @@ module.exports = {
         throw new ApolloError("Incorrect password", "INCORRECT_PASSWORD");
       }
     },
+    async changeUsername(_, { id, editUsernameInput: { username } }) {
+      const oldUser = await User.findOne({ username });
+
+      if (oldUser) {
+        throw new ApolloError(
+          "That username is already in use",
+          "USERNAME_ALREADY_EXISTS"
+        );
+      }
+
+      const wasUpdated = (
+        await User.updateOne({ _id: id }, { username: username })
+      ).modifiedCount;
+      return wasUpdated;
+    },
+    async changeEmail(_, { id, editEmailInput: { email } }) {
+      email = email.toLowerCase();
+      const oldUser = await User.findOne({ email });
+
+      if (oldUser) {
+        throw new ApolloError(
+          "That email is already in use.",
+          "USERNAME_ALREADY_EXISTS"
+        );
+      }
+
+      const wasUpdated = (await User.updateOne({ _id: id }, { email: email }))
+        .modifiedCount;
+      return wasUpdated > 0;
+    },
+    async changePassword(_, { id, editPasswordInput: { password } }) {
+      const wasUpdated = (
+        await User.updateOne(
+          { _id: id },
+          { password: await bcrypt.hash(password, 10) }
+        )
+      ).modifiedCount;
+      return wasUpdated > 0;
+    },
   },
   Query: {
-    user: (_: any, { ID }: any) => User.findById(ID),
+    async user(_, { ID }) {
+      return await User.findById(ID);
+    },
   },
 };

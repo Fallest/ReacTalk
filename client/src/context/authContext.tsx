@@ -1,12 +1,9 @@
 import jwtDecode from "jwt-decode";
 import React, { useReducer, createContext } from "react";
-import type { User } from '../types/user'; 
 
 // Create the initial state
-const initialState = {
+let initialState = {
   user: null,
-  chat: null,
-  message: null,
 };
 
 /**
@@ -31,12 +28,9 @@ if (token) {
 
 // Create the actual context that is going to be used.
 const AuthContext = createContext({
-  user: null,
+  user: { exp: null, iat: null, username: null, token: null },
   login: (userData: any) => {},
   logout: () => {},
-  addFriend: (friendName: string) => {},
-  createChat: (chatName: string, users: any) => {},
-  sendMessage: (toChat: string, sender: any, content: string) => {},
 });
 
 /**
@@ -61,21 +55,6 @@ function authReducer(state: any, action: any) {
       return {
         ...state,
         user: null,
-      };
-    case "ADD_FRIEND":
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case "CREATE_CHAT":
-      return {
-        ...state,
-        chat: action.payload,
-      };
-    case "SEND_MESSAGE":
-      return {
-        ...state,
-        message: action.payload,
       };
     default:
       return state;

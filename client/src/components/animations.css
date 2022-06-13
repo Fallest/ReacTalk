@@ -69,3 +69,77 @@
     color: aqua;
   }
 }
+
+/* Chat animations */
+@media (prefers-reduced-motion: no-preference) {
+  .send-button:hover,
+  .exit-button:hover {
+    animation: button-hover 1 0.5s forwards;
+  }
+  .user-message {
+    animation: load-user-message 1 0.5s forwards;
+    transition-property: margin-right;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+  }
+  .friend-message {
+    animation: load-friend-message 1 0.5s forwards;
+    transition-property: margin-right;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+  }
+  .chat-friend-name p {
+    animation: friend-name-appear 1 1s forwards;
+  }
+}
+
+@keyframes load-user-message {
+  from {
+    color: transparent;
+    border-color: transparent;
+    background-color: transparent;
+    margin-right: -50px;
+  }
+  to {
+    color: white;
+    border-color: aqua;
+    background-color: #282c34;
+    margin-right: 20px;
+  }
+}
+
+@keyframes load-friend-message {
+  from {
+    color: transparent;
+    border-color: transparent;
+    background-color: transparent;
+    margin-left: -50px;
+  }
+  to {
+    color: white;
+    border-color: aqua;
+    background-color: #282c34;
+    margin-left: 20px;
+  }
+}
+
+@keyframes friend-name-appear {
+  from {
+    color: transparent;
+    margin-left: -50px;
+  }
+  to {
+    color: white;
+    margin-left: 0;
+  }
+}
+
+@keyframes button-hover {
+  from {
+  }
+  to {
+    cursor: pointer;
+    background-color: aqua;
+    color: black;
+  }
+}

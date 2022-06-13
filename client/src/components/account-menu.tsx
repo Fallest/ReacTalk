@@ -9,11 +9,12 @@ import Logout from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { logout } = React.useContext(AuthContext);
+  const context = React.useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -25,7 +26,7 @@ export default function AccountMenu() {
   };
 
   const onLogout = () => {
-    logout();
+    context.logout();
     navigate("/login");
   };
 
@@ -36,6 +37,7 @@ export default function AccountMenu() {
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+        <Typography>{context.user.username}</Typography>
         <IconButton
           onClick={handleClick}
           size="small"

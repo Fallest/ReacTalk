@@ -44,7 +44,7 @@ module.exports = {
       const user = await User.findOne({ username });
 
       if (!(username && password)) {
-        user.status(400).send("All input is required");
+        throw new ApolloError("All input is required", "INCORRECT_INPUT");
       }
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
@@ -63,9 +63,8 @@ module.exports = {
           id: user.id,
           ...user._doc,
         };
-      } else {
-        throw new ApolloError("Incorrect password", "INCORRECT_PASSWORD");
       }
+      throw new ApolloError("Incorrect credentials", "INCORRECT_CREDENTIALS");
     },
     async changeUsername(_, { id, editUsernameInput: { username } }) {
       const oldUser = await User.findOne({ username });

@@ -41,6 +41,9 @@ export const Sidebar: FC = () => {
        * Search bar to start new chats with friends.
        * Render all the chats the user is part of.
        */}
+
+      <SidebarSearch />
+      <KnowledgeList />
     </Box>
   );
 };

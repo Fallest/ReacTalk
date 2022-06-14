@@ -38,7 +38,7 @@ module.exports = {
     },
   },
   Query: {
-    async getUsers(_, { userId }) {
+    async getUsers(_, { userName }) {
       /**
        * Returns the IDs of all the users that share a chat with a user.
        *
@@ -50,7 +50,7 @@ module.exports = {
       // Get all the {Chat: users[]} documents (an array of Chats
       // where they only have the "users" value (another array))
       (
-        await Chat.find({ users: userId }) // Get all the chats the user is part of.
+        await Chat.find({ users: userName }) // Get all the chats the user is part of.
           .populate("users")
       ) // Get only the user lists.
         .forEach(
@@ -68,11 +68,11 @@ module.exports = {
        */
       return await Chat.find({ users: userId });
     },
-    async getMessages(_, { chatId }) {
+    async getMessages(_, { chatName }) {
       /**
        * Return all the messages of a chat.
        */
-      return await Message.find({ toChat: chatId });
+      return await Message.find({ toChat: chatName });
     },
   },
 };

@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
 const chatSchema = new Schema({
-  name: String,
+  name: { type: String, unique: true },
   users: [String],
   createdAt: String,
 });

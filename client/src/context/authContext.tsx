@@ -19,18 +19,27 @@ let initialState = {
 const token = localStorage.getItem("token");
 if (token) {
   const decodedToken: any = jwtDecode(token);
-  if (decodedToken.exp * 1000 < Date.now()) {
+  if (decodedToken.exp * 3600 < Date.now()) {
+    // 1 hour before it expires
     localStorage.removeItem("token");
   } else {
-    initialState.user = decodedToken;
+    initialState.user = { ...decodedToken, currentChat: null };
   }
 }
 
 // Create the actual context that is going to be used.
 const AuthContext = createContext({
-  user: { exp: null, iat: null, username: null, token: null },
+  user: {
+    exp: null,
+    iat: null,
+    user_id: null,
+    username: null,
+    token: null,
+    currentChat: null,
+  },
   login: (userData: any) => {},
   logout: () => {},
+  setCurrentChat: (chatName: string) => {},
 });
 
 /**
@@ -49,12 +58,17 @@ function authReducer(state: any, action: any) {
     case "LOGIN":
       return {
         ...state,
-        user: action.payload,
+        user: { ...action.payload, currentChat: null },
       };
     case "LOGOUT":
       return {
         ...state,
         user: null,
+      };
+    case "SET_CHAT":
+      return {
+        ...state,
+        user: { ...state.user, currentChat: action.payload },
       };
     default:
       return state;
@@ -84,9 +98,16 @@ function AuthProvider(props: any) {
     dispatch({ type: "LOGOUT" });
   }
 
+  const setCurrentChat = (chatName: string) => {
+    dispatch({
+      type: "SET_CHAT",
+      payload: chatName,
+    });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user: state.user, login, logout }}
+      value={{ user: state.user, login, logout, setCurrentChat }}
       {...props}
     />
   );

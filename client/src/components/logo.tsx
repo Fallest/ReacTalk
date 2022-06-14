@@ -14,8 +14,7 @@ export const Logo: React.FC<LogoProps> = (props) => {
       sx={{
         textAlign: "center",
         color: "aqua",
-        p: 3,
-        mt: 3,
+        my: 1,
       }}
     >
       <sup className="border-around">React</sup>Talk

@@ -7,7 +7,7 @@ import { useState } from "react";
  * @param initialState The initial state of the values.
  * @returns onChange, onSubmit functions, and the values.
  */
-export const useForm = (callback: any, initialState = {}) => {
+export const useForm = (callback: any, initialState: any = {}) => {
   const [values, setValues] = useState(initialState);
 
   const onChange = (event: any) => {

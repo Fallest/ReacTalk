@@ -96,9 +96,10 @@ function Login(props: any) {
    * Check if a user is already logged in.
    * If there is a user logged in, we go into the chats page.
    */
-  if (context.user !== null) {
+  try {
+    context.user.token;
     navigate("/chats");
-  }
+  } catch (err) {}
 
   return (
     <Container
@@ -129,51 +130,57 @@ function Login(props: any) {
           pt: "60px",
         }}
       >
-        <TextField label="Username" name="username" onChange={onChange} />
-        <TextField
-          label="Password"
-          name="password"
-          type={showPassword ? "text" : "password"}
-          onChange={onChange}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onSubmit(e);
-            }
-          }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Button
-          variant="contained"
-          onClick={onSubmit}
-          sx={{
-            maxWidth: "30%",
-            alignSelf: "flex-end",
-            fontFamily: "Cantarell",
-            cursor: "pointer",
-            backgroundColor: "#316e70",
-            mb: "auto",
-            ":hover": {
-              backgroundColor: "aqua",
-              color: "black",
-            },
-          }}
-        >
-          Login&nbsp;
-          <ArrowForward fontSize="small" />
-        </Button>
+        {loading ? (
+          <>Loading...</>
+        ) : (
+          <>
+            <TextField label="Username" name="username" onChange={onChange} />
+            <TextField
+              label="Password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              onChange={onChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  onSubmit(e);
+                }
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Button
+              variant="contained"
+              onClick={onSubmit}
+              sx={{
+                maxWidth: "30%",
+                alignSelf: "flex-end",
+                fontFamily: "Cantarell",
+                cursor: "pointer",
+                backgroundColor: "#316e70",
+                mb: "auto",
+                ":hover": {
+                  backgroundColor: "aqua",
+                  color: "black",
+                },
+              }}
+            >
+              Login&nbsp;
+              <ArrowForward fontSize="small" />
+            </Button>
+          </>
+        )}
 
         <Link
           onClick={handleRegisterClick}

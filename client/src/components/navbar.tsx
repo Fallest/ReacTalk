@@ -6,7 +6,7 @@ import AccountMenu from "./account-menu";
 export const Navbar: FC = () => {
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, maxHeight: "10%"}}>
       <AppBar 
         position="static" 
         sx={{

@@ -51,9 +51,7 @@ module.exports = {
         const token = jwt.sign(
           { user_id: user._id, username },
           "UNSAFESTRING",
-          {
-            expiresIn: "2h",
-          }
+          { expiresIn: "1h" }
         );
 
         // save user token

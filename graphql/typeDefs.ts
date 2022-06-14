@@ -34,30 +34,30 @@ module.exports = gql`
 
   type Chat {
     name: String
-    users: [ID]
+    users: [String]
     createdAt: String
   }
 
   input CreateChatInput {
     name: String
-    users: [ID]
+    users: [String]
   }
 
   input EditChatInput {
     name: String
-    users: [ID]
+    users: [String]
   }
 
   type Message {
-    toChat: ID
-    sender: ID
+    toChat: String
+    sender: String
     content: String
     createdAt: String
   }
 
   input SendMessageInput {
-    toChat: ID
-    sender: ID
+    toChat: String
+    sender: String
     content: String
   }
 
@@ -78,10 +78,10 @@ module.exports = gql`
 
   type Query {
     user(id: ID!): User
-    getUsers(userId: ID!): [String]
+    getUsers(userName: String): [String]
     chat(id: ID!): Chat
     getChats(userId: ID!): [Chat]
     message(id: ID!): Message
-    getMessages(chatId: ID!): [Message]
+    getMessages(chatName: String): [Message]
   }
 `;

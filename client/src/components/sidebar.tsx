@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 
 import { AuthContext } from "../context/authContext";
 
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 
 import { Logo } from "./logo";
+import { ChatsTable } from "./chats-table";
 
 /**
  * Sidebar component for the chats page.
@@ -30,20 +31,13 @@ export const Sidebar: FC = () => {
         alignItems: "center",
       }}
     >
-      <Link to="/chats" style={{ textDecoration: "none", margin: "20px" }}>
-        <Logo size={60} />
+      <Link to="/chats" style={{ textDecoration: "none" }}>
+        <Logo size={30} />
       </Link>
 
-      <Divider flexItem sx={{ my: 3, backgroundColor: "aqua" }} />
+      <Divider flexItem sx={{ backgroundColor: "aqua" }} />
 
-      {/**
-       * TODO:
-       * Search bar to start new chats with friends.
-       * Render all the chats the user is part of.
-       */}
-
-      <SidebarSearch />
-      <KnowledgeList />
+      <ChatsTable />
     </Box>
   );
 };

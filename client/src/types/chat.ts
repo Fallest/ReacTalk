@@ -4,5 +4,5 @@ import type { Message } from './message';
 export type Chat = {
   name: string,
   users: User[],
-  messages: Message[]
+  createdAt: Message[]
 };

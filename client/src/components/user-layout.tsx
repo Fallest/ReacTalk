@@ -20,8 +20,6 @@ type UserLayoutProps = {
  * @returns A dashbaord-like layout.
  */
 export const UserLayout: FC<UserLayoutProps> = (props) => {
-
-
   return (
     <Container
       maxWidth={false}

@@ -1,8 +1,0 @@
-/* Styles for the whole page */
-.Conversations-page {
-  position: fixed;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  padding: 100px;
-}

@@ -35,6 +35,11 @@ module.exports = {
 
       const res = await newUser.save();
 
+      /**
+       * Whenever a new user is registered, they must be included in the Starters Chat.
+       * This is done in mixedResolvers.
+       */
+
       return {
         id: res.id,
         ...res._doc,
@@ -105,8 +110,8 @@ module.exports = {
     },
   },
   Query: {
-    async user(_, { ID }) {
-      return await User.findById(ID);
+    async user(_, { id }) {
+      return await User.findById(id);
     },
   },
 };

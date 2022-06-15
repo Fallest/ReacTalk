@@ -71,6 +71,7 @@ module.exports = gql`
 
     createChat(createChatInput: CreateChatInput): Chat!
     editChat(id: ID!, editChatInput: EditChatInput): Boolean
+    addUserToChat(userName: String, chatName: String): Boolean
     deleteChat(id: ID!): Boolean
 
     sendMessage(sendMessageInput: SendMessageInput): Message!

@@ -36,7 +36,19 @@ module.exports = {
       await Message.deleteMany({ toChat: id }); // Delete all messages related to that chat
       return (await Chat.deleteOne({ _id: id })).deletedCount > 0;
     },
+    async addUserToChat(_, { userName, chatName }) {
+      /**
+       * Add a user to a Chat's user list.
+       */
+      let usrs = await Chat.findOne({ name: chatName }).populate("users");
+      usrs.users.push(userName);
+      const wasUpdated = (
+        await Chat.updateOne({ name: chatName }, { users: usrs.users })
+      ).modifiedCount;
+      return wasUpdated > 0;
+    },
   },
+
   Query: {
     async getUsers(_, { userName }) {
       /**

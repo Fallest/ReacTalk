@@ -185,7 +185,11 @@ export const NewChatDialog: FC<DialogProps> = (props) => {
           variant="h5"
         >
           New chat
-          <Close onClick={handleOnClose} color="action" />
+          <Close
+            cursor="pointer"
+            onClick={handleOnClose}
+            sx={{ color: "white" }}
+          />
         </DialogTitle>
         <DialogContent dividers sx={{ mb: 2, maxHeight: "auto" }}>
           <TextField
@@ -290,12 +294,24 @@ export const NewChatDialog: FC<DialogProps> = (props) => {
             justifyContent: "space-between",
           }}
         >
-          <Button onClick={handleOnClose}>Cancel</Button>
+          <Button
+            onClick={handleOnClose}
+            sx={{
+              backgroundColor: "transparent",
+              color: "white",
+            }}
+          >
+            Cancel
+          </Button>
           <Button
             variant="contained"
             onClick={() => {
               formik.setFieldValue("usersArray", selectedUsers);
               formik.handleSubmit();
+            }}
+            sx={{
+              backgroundColor: "aqua",
+              color: "black",
             }}
           >
             Create

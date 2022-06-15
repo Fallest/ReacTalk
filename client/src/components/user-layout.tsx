@@ -27,6 +27,7 @@ export const UserLayout: FC<UserLayoutProps> = (props) => {
       sx={{
         display: "flex",
         flexFlow: "row",
+        borderBottom: "2px solid aqua"
       }}
     >
       <Sidebar />

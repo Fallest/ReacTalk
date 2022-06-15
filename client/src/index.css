@@ -6,3 +6,14 @@ body {
   height: 100%;
   overflow-y: auto;
 }
+footer {
+  width: 100%;
+  background-color: dimgrey;
+  display: flex;
+  flex-flow: row;
+  justify-items: center;
+  align-items: center;
+  padding-bottom: 2vh;
+  padding-top: 2vh;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

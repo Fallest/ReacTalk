@@ -21,12 +21,17 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 
 const REGISTER_USER = gql`
-  mutation Mutation($registerInput: RegisterInput) {
+  mutation registerUser(
+    $registerInput: RegisterInput
+    $chatName: String
+    $userName: String
+  ) {
     registerUser(registerInput: $registerInput) {
+      token
       email
       username
-      token
     }
+    addUserToChat(chatName: $chatName, userName: $userName)
   }
 `;
 
@@ -56,14 +61,22 @@ function Register(props: any) {
   });
 
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
-    update(proxy, { data: { registerUser: userData } }) {
+    update(
+      proxy,
+      { data: { registerUser: userData, addUserToChat: userAdded } }
+    ) {
+      console.log(userAdded);
       context.login(userData);
       navigate("/");
     },
     onError({ graphQLErrors }: any) {
       setErrors(graphQLErrors);
     },
-    variables: { registerInput: values },
+    variables: {
+      registerInput: values,
+      chatName: "Welcome Aboard!",
+      userName: values.username,
+    },
   });
 
   const handleAccountClick = (event: any) => {
@@ -92,7 +105,7 @@ function Register(props: any) {
       <Logo size={80} />
       <Typography variant="h4">Register</Typography>
       <Typography>
-        This is the register page, register below to create an account!
+        Welcome aboard, register below to create an account!
       </Typography>
       <Stack
         sx={{

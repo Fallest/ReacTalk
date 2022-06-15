@@ -8,7 +8,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/authContext";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 /**
  * Our react app needss access to:
@@ -33,6 +33,61 @@ root.render(
           >
             <App />
           </Container>
+          <footer>
+            <Box
+              sx={{
+                display: "flex",
+                flexFlow: "column",
+                alignItems: "center",
+                mr: "auto",
+                ml: "30px",
+              }}
+            >
+              <a
+                rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/"
+              >
+                <img
+                  alt="Creative Commons License"
+                  style={{ borderWidth: 0 }}
+                  src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"
+                />
+              </a>
+              <br />
+              This work is licensed under a{" "}
+              <a
+                rel="license"
+                style={{ textDecoration: "none", color: "darkturquoise" }}
+                href="http://creativecommons.org/licenses/by-sa/4.0/"
+              >
+                Creative Commons Attribution-ShareAlike 4.0 International
+                License
+              </a>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexFlow: "column",
+                alignItems: "center",
+                mr: "30px",
+              }}
+            >
+              Designed and developed by
+              <a
+                style={{ textDecoration: "none", color: "darkturquoise" }}
+                href="https://github.com/Fallest"
+              >
+                David Navarrete
+              </a>
+              Check the source code on
+              <a
+                style={{ textDecoration: "none", color: "darkturquoise" }}
+                href="https://github.com/Fallest/ReacTalk"
+              >
+                GitHub
+              </a>
+            </Box>
+          </footer>
         </React.StrictMode>
       </BrowserRouter>
     </ApolloProvider>

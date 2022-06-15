@@ -36,10 +36,12 @@ const AuthContext = createContext({
     username: null,
     token: null,
     currentChat: null,
+    inProfile: null,
   },
   login: (userData: any) => {},
   logout: () => {},
   setCurrentChat: (chatName: string) => {},
+  showProfile: (show: boolean) => {},
 });
 
 /**
@@ -69,6 +71,11 @@ function authReducer(state: any, action: any) {
       return {
         ...state,
         user: { ...state.user, currentChat: action.payload },
+      };
+    case "SHOW_PROFILE":
+      return {
+        ...state,
+        user: { ...state.user, inProfile: action.payload },
       };
     default:
       return state;
@@ -105,9 +112,16 @@ function AuthProvider(props: any) {
     });
   };
 
+  const showProfile = (show: boolean) => {
+    dispatch({
+      type: "SHOW_PROFILE",
+      payload: show,
+    });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user: state.user, login, logout, setCurrentChat }}
+      value={{ user: state.user, login, logout, setCurrentChat, showProfile }}
       {...props}
     />
   );

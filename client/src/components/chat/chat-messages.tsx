@@ -22,6 +22,7 @@ import { AuthContext } from "../../context/authContext";
 import { Box } from "@mui/system";
 import { Send as SendIcon } from "@mui/icons-material";
 import { LinearProgress as LoadingIcon } from "@mui/material";
+import { ProfileInfo } from "../profile/profile-info";
 
 /**
  * Mutation to get all the messages from a chat.
@@ -158,6 +159,8 @@ export const ChatMessages: FC = (props) => {
       }}
       {...props}
     >
+      <ProfileInfo visible={user.inProfile} />
+
       {errors.map(function(error: any) {
         return (
           <Alert key={error.name} sx={{ my: "10px" }} severity="error">

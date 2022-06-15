@@ -1,137 +1,284 @@
-import React, { FC, useContext, useEffect, useState } from "react";
-
 import {
-  Card,
-  InputAdornment,
-  Table,
-  TableBody,
-  Typography,
+  Button,
+  LinearProgress as LoadingIcon,
+  Stack,
   TextField,
-  TableContainer,
-  Alert,
-  TableRow,
-  TableCell,
+  Typography,
 } from "@mui/material";
-import { SearchOutlined as SearchIcon } from "@mui/icons-material";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
-import { AuthContext } from "../../context/authContext";
-import { chatSearch } from "../../utils/chat-search";
+import React, { FC, useContext, useState } from "react";
 
-export const GET_CHATS = gql`
-  query getChats($userId: ID!) {
-    getChats(userId: $userId) {
-      name
-      users
-      createdAt
+import { Card, Alert, Box } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import gql from "graphql-tag";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { AuthContext } from "../../context/authContext";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Close } from "@mui/icons-material";
+
+const bcrypt = require("bcryptjs");
+
+/**
+ * Queries and mutations to get and modify user data.
+ */
+export const GET_USER = gql`
+  query user($id: ID!) {
+    user(id: $id) {
+      username
+      email
+      password
     }
   }
 `;
 
-export const ProfileInfo: FC = (props) => {
+export const CHANGE_USERNAME = gql`
+  mutation changeUsername(
+    $changeUsernameId: ID!
+    $editUsernameInput: EditUsernameInput
+  ) {
+    changeUsername(id: $changeUsernameId, editUsernameInput: $editUsernameInput)
+  }
+`;
+
+export const CHANGE_EMAIL = gql`
+  mutation changeEmail($changeEmailId: ID!, $editEmailInput: EditEmailInput) {
+    changeEmail(id: $changeEmailId, editEmailInput: $editEmailInput)
+  }
+`;
+
+export const CHANGE_PASSWORD = gql`
+  mutation changePassword(
+    $changePasswordId: ID!
+    $editPasswordInput: EditPasswordInput
+  ) {
+    changePassword(id: $changePasswordId, editPasswordInput: $editPasswordInput)
+  }
+`;
+
+type ProfileInfoProps = {
+  visible: boolean;
+};
+
+export const ProfileInfo: FC<ProfileInfoProps> = (props) => {
+  const { visible } = props;
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [usernameChanged, setUsernameChanged] = useState(false);
+  const [emailChanged, setEmailChanged] = useState(false);
+  const [pwdChanged, setPwdChanged] = useState(false);
 
-  const { loading, error, data, refetch } = useQuery(GET_CHATS, {
+  // Mutation to modify user data
+  const [changeUsername] = useMutation(CHANGE_USERNAME, {
     onError({ graphQLErrors }: any) {
       setErrors(graphQLErrors);
     },
-    variables: { userId: context.user.user_id },
+    variables: {
+      changeUsernameId: context.user.user_id,
+      editUsernameInput: { username: userData.username },
+    },
   });
 
-  // Filtering state management
-  const [searchFor, setSearchFor] = useState("");
+  const [changeEmail] = useMutation(CHANGE_EMAIL, {
+    onError({ graphQLErrors }: any) {
+      setErrors(graphQLErrors);
+    },
+    variables: {
+      changeEmailId: context.user.user_id,
+      editEmailInput: { email: userData.email },
+    },
+  });
 
-  const handleSearchChange = (event: any) => {
-    setSearchFor(event.target.value);
-  };
-  // -----------------------------
+  const [changePassword] = useMutation(CHANGE_PASSWORD, {
+    onError({ graphQLErrors }: any) {
+      setErrors(graphQLErrors);
+    },
+    variables: {
+      changePasswordId: context.user.user_id,
+      editPasswordInput: { password: userData.password },
+    },
+  });
 
-  // To filter chats.
-  const getFilteredChats = () => {
-    let filteredChats: Array<any> =
-      data &&
-      data.getChats.filter((chat: any) => {
-        return searchFor === "" || chatSearch(chat.name, searchFor);
-      });
+  // Get all user info
+  const { loading, data, refetch } = useQuery(GET_USER, {
+    onCompleted(data) {
+      setUserData(data.user);
+    },
+    onError({ graphQLErrors }: any) {
+      setErrors(graphQLErrors);
+    },
+    variables: { id: context.user.user_id },
+  });
 
-    if (!filteredChats || filteredChats.length === 0) {
-      return [{ name: "No chats found." }];
+  const onChange = (e) => {
+    switch (e.target.name) {
+      case "username":
+        setUsernameChanged(true);
+        setUserData({ ...userData, username: e.target.value });
+        break;
+      case "email":
+        setEmailChanged(true);
+        setUserData({ ...userData, email: e.target.value });
+        break;
+      case "password":
+        setPwdChanged(true);
+        setUserData({ ...userData, password: e.target.value });
+        break;
     }
-    return filteredChats;
   };
 
-  //------------------------------------
-
-  // Tag selection management
-  const [selectedChat, setSelectedChat] = useState("");
-
-  const handleSelectChat = (chat_id: string): void => {
-    setSelectedChat(chat_id);
-    chat_id === "No chats found." && setSelectedChat("");
+  const onSubmit = () => {
+    usernameChanged && changeUsername();
+    emailChanged && changeEmail();
+    pwdChanged && changePassword();
+    refetch();
   };
-  //------------------------------------
 
-  return loading ? (
-    <Typography m={3} color="white">
-      Loading chats...
-    </Typography>
-  ) : (
-    <Card
-      sx={{
-        width: "100%",
-        backgroundColor: "inherit",
-      }}
-      {...props}
-    >
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon fontSize="large" />
-            </InputAdornment>
-          ),
+  return (
+    visible &&
+    (loading ? (
+      <Card
+        sx={{
+          width: "100%",
+          height: "840px",
+          backgroundColor: "inherit",
         }}
-        type="search"
-        variant="outlined"
-        onChange={handleSearchChange}
-        fullWidth
-        sx={{ backgroundColor: "#606d87" }}
-        size="medium"
-      />
-      {errors.map(function(error: any) {
-        return (
-          <Alert key={error.name} sx={{ my: "10px" }} severity="error">
-            {error.message}
-          </Alert>
-        );
-      })}
+      >
+        <Box
+          sx={{
+            mt: 3,
+            width: "100%",
+          }}
+        >
+          <LoadingIcon color="primary" />
+        </Box>
+      </Card>
+    ) : (
+      <Card
+        sx={{
+          position: "absolute",
+          right: 0,
+          width: "35vw",
+          height: "90vh",
+          backgroundColor: "rgb(55, 69, 87)",
+          borderLeft: "1px solid aqua",
+        }}
+        {...props}
+      >
+        <Close
+          cursor="pointer"
+          onClick={() => context.showProfile(false)}
+          fontSize="large"
+          sx={{ color: "white", mt: 3, ml: 3 }}
+        />
 
-      <TableContainer>
-        <Table>
-          <TableBody>
-            {getFilteredChats().map((chat: any) => {
-              const isChatSelected = selectedChat === chat.name;
-              return (
-                <TableRow key={chat.name} selected={isChatSelected}>
-                  <TableCell
-                    key={chat.name}
-                    onClick={() => handleSelectChat(chat.name)}
-                  >
-                    <Typography
-                      color={isChatSelected ? "aqua" : "lightgray"}
-                      align="left"
-                      variant="h5"
-                    >
-                      {chat.name}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Card>
+        <Box
+          sx={{
+            display: "flex",
+            flexFlow: "column",
+            alignItems: "center",
+            spacing: 3,
+            px: 3,
+          }}
+        >
+          <AccountCircleIcon
+            fontSize="large"
+            sx={{ width: "160px", height: "160px" }}
+          />
+
+          {!loading && userData && (
+            <Stack spacing={3}>
+              <Box>
+                <Typography color="white">Username:</Typography>
+                <TextField
+                  disabled
+                  variant="filled"
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#97a7c7",
+                    "& .MuiFilledInput-underline": {
+                      color: "black",
+                    },
+                    "& .MuiInputBase-root::after": {
+                      borderBottom: "2px solid aqua",
+                    },
+                  }}
+                  name="username"
+                  value={userData.username}
+                  onChange={onChange}
+                />
+              </Box>
+              <Box>
+                <Typography color="white">Email:</Typography>
+                <TextField
+                  required
+                  variant="filled"
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#97a7c7",
+                    "& .MuiFilledInput-underline": {
+                      color: "black",
+                    },
+                    "& .MuiInputBase-root::after": {
+                      borderBottom: "2px solid aqua",
+                    },
+                  }}
+                  type="email"
+                  name="email"
+                  value={userData.email}
+                  onChange={onChange}
+                />
+              </Box>
+              <Box>
+                <Typography color="white">Password:</Typography>
+                <TextField
+                  required
+                  variant="filled"
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#97a7c7",
+                    "& .MuiFilledInput-underline": {
+                      color: "black",
+                    },
+                    "& .MuiInputBase-root::after": {
+                      borderBottom: "2px solid aqua",
+                    },
+                  }}
+                  type="password"
+                  name="password"
+                  value={userData.password}
+                  onChange={onChange}
+                />
+              </Box>
+              {errors.map(function(error: any) {
+                return (
+                  <Alert key={error.name} sx={{ my: "10px" }} severity="error">
+                    {error.message}
+                  </Alert>
+                );
+              })}
+              <Button
+                disabled={
+                  data && userData.email === data.user.email && !pwdChanged
+                }
+                variant="contained"
+                fullWidth
+                sx={{
+                  backgroundColor: "aqua",
+                  color: "black",
+                }}
+                onClick={onSubmit}
+              >
+                Save
+              </Button>
+            </Stack>
+          )}
+        </Box>
+      </Card>
+    ))
   );
 };

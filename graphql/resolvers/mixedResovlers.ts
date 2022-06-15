@@ -61,12 +61,12 @@ module.exports = {
       // Since a user could be repeated in various chats, by using a set, repeated users are removed.
       return [...new Set(res)];
     },
-    async getChats(_, { userId }) {
+    async getChats(_, { userName }) {
       /**
        * Returns all chats the user is part of.
        * For each chat, check if the user is in the user list.
        */
-      return await Chat.find({ users: userId });
+      return await Chat.find({ users: userName });
     },
     async getMessages(_, { chatName }) {
       /**

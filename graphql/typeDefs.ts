@@ -80,7 +80,7 @@ module.exports = gql`
     user(id: ID!): User
     getUsers(userName: String): [String]
     chat(id: ID!): Chat
-    getChats(userId: ID!): [Chat]
+    getChats(userName: String): [Chat]
     message(id: ID!): Message
     getMessages(chatName: String): [Message]
   }

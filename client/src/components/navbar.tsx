@@ -6,13 +6,14 @@ import AccountMenu from "./account-menu";
 export const Navbar: FC = () => {
 
   return (
-    <Box sx={{ flexGrow: 1, maxHeight: "10%"}}>
+    <Box>
       <AppBar 
         position="static" 
         sx={{
           backgroundColor: "rgb(55, 69, 87)",
           borderBottom: "1px solid aqua",
-          alignItems: "flex-end" 
+          alignItems: "flex-end",
+          height: "10vh"
         }}
       >
         <Toolbar>

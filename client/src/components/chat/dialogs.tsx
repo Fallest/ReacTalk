@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 
 import { Close } from "@mui/icons-material";
 import {
@@ -22,7 +22,7 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import gql from "graphql-tag";
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../../context/authContext";
 import { useQuery } from "@apollo/react-hooks";
 
 type DialogProps = {
@@ -78,9 +78,11 @@ export const NewChatDialog: FC<DialogProps> = (props) => {
 
   const context = useContext(AuthContext);
 
-  const { loading, error, data } = useQuery(GET_USERS, {
-    variables: { userName: context.user.username },
-  });
+  const { loading, error, data } =
+    visible &&
+    useQuery(GET_USERS, {
+      variables: { userName: context.user.username },
+    });
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -115,9 +117,12 @@ export const NewChatDialog: FC<DialogProps> = (props) => {
 
   // User selection management
   const [selectedUsers, setSelectedUsers] = useState<any[]>([]);
-  const allUsersSelected = selectedUsers.length === data.getUsers.length;
+  const allUsersSelected =
+    visible && selectedUsers.length === data.getUsers.length;
   const someUsersSelected =
-    selectedUsers.length > 0 && selectedUsers.length < data.getUsers.length;
+    visible &&
+    selectedUsers.length > 0 &&
+    selectedUsers.length < data.getUsers.length;
 
   const handleSelectAllUsers = (event: any): void => {
     setSelectedUsers(
@@ -136,7 +141,9 @@ export const NewChatDialog: FC<DialogProps> = (props) => {
   };
   //------------------------------------
 
-  return (
+  return loading ? (
+    <>Loading page...</>
+  ) : (
     <>
       <Dialog open={visible} onClose={handleOnClose}>
         <DialogTitle
@@ -181,38 +188,39 @@ export const NewChatDialog: FC<DialogProps> = (props) => {
               </TableHead>
 
               <TableBody>
-                {data.getUsers.map((user: any) => {
-                  const isUserSelected = selectedUsers.includes(user);
-                  return (
-                    <TableRow key={user.username} selected={isUserSelected}>
-                      <TableCell sx={{ display: "flex", flexFlow: "column" }}>
-                        <Checkbox
-                          checked={isUserSelected}
-                          onChange={(_event) => handleSelectOneUser(user)}
-                          value={isUserSelected}
-                        />
-                      </TableCell>
+                {data &&
+                  data.getUsers.map((user: any) => {
+                    const isUserSelected = selectedUsers.includes(user);
+                    return (
+                      <TableRow key={user.username} selected={isUserSelected}>
+                        <TableCell sx={{ display: "flex", flexFlow: "column" }}>
+                          <Checkbox
+                            checked={isUserSelected}
+                            onChange={(_event) => handleSelectOneUser(user)}
+                            value={isUserSelected}
+                          />
+                        </TableCell>
 
-                      <TableCell>
-                        <Box
-                          sx={{
-                            py: 1,
-                            backgroundColor: "black",
-                            borderRadius: 2,
-                          }}
-                        >
-                          <Typography
-                            align="center"
-                            color="white"
-                            variant="subtitle2"
+                        <TableCell>
+                          <Box
+                            sx={{
+                              py: 1,
+                              backgroundColor: "black",
+                              borderRadius: 2,
+                            }}
                           >
-                            {user.username}
-                          </Typography>
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                            <Typography
+                              align="center"
+                              color="white"
+                              variant="subtitle2"
+                            >
+                              {user.username}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
               </TableBody>
             </Table>
           </TableContainer>

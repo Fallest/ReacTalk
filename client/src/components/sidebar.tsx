@@ -8,7 +8,7 @@ import { AuthContext } from "../context/authContext";
 import { Box, Divider, Typography } from "@mui/material";
 
 import { Logo } from "./logo";
-import { ChatsTable } from "./chats-table";
+import { ChatsTable } from "./chat/chats-table";
 
 /**
  * Sidebar component for the chats page.
@@ -22,7 +22,7 @@ export const Sidebar: FC = () => {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        height: "100vh",
         width: "25vw",
         backgroundColor: "rgb(55, 69, 87)",
         borderRight: "1px solid aqua",

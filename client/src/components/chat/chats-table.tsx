@@ -12,15 +12,19 @@ import {
   TableRow,
   TableCell,
 } from "@mui/material";
-import { SearchOutlined as SearchIcon } from "@mui/icons-material";
+import { AddComment, SearchOutlined as SearchIcon } from "@mui/icons-material";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
-import { AuthContext } from "../context/authContext";
-import { chatSearch } from "../utils/chat-search";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { AuthContext } from "../../context/authContext";
+import "../animations.css";
+import { chatSearch } from "../../utils/chat-search";
+import { NewChatDialog } from "./dialogs";
+import { LinearProgress as LoadingIcon } from "@mui/material";
+import { Box } from "@mui/system";
 
 export const GET_CHATS = gql`
-  query getChats($userId: ID!) {
-    getChats(userId: $userId) {
+  query getChats($userName: String) {
+    getChats(userName: $userName) {
       name
       users
       createdAt
@@ -28,15 +32,40 @@ export const GET_CHATS = gql`
   }
 `;
 
-export const ProfileInfo: FC = (props) => {
+export const CREATE_CHAT = gql`
+  mutation createChat($createChatInput: CreateChatInput) {
+    createChat(createChatInput: $createChatInput) {
+      name
+      users
+      createdAt
+    }
+  }
+`;
+
+export const ChatsTable: FC = (props) => {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
 
-  const { loading, error, data, refetch } = useQuery(GET_CHATS, {
+  // To get all user's chats.
+  const { loading, error, data } = useQuery(GET_CHATS, {
     onError({ graphQLErrors }: any) {
       setErrors(graphQLErrors);
     },
-    variables: { userId: context.user.user_id },
+    variables: { userName: context.user.username },
+  });
+
+  // To create a new chat
+  const [newChatData, setNewChatData] = useState<{
+    name: String;
+    users: String[];
+  }>({ name: "", users: [] });
+  const [createChat] = useMutation(CREATE_CHAT, {
+    variables: {
+      createChatInput: {
+        users: newChatData.users,
+        name: newChatData.name,
+      },
+    },
   });
 
   // Filtering state management
@@ -67,15 +96,32 @@ export const ProfileInfo: FC = (props) => {
   const [selectedChat, setSelectedChat] = useState("");
 
   const handleSelectChat = (chat_id: string): void => {
+    context.setCurrentChat(chat_id);
+    console.log(chat_id);
     setSelectedChat(chat_id);
     chat_id === "No chats found." && setSelectedChat("");
   };
   //------------------------------------
 
+  const [newChatDialogVisibility, setNewChatDialogVisibility] = useState(false);
+
   return loading ? (
-    <Typography m={3} color="white">
-      Loading chats...
-    </Typography>
+    <Card
+      sx={{
+        width: "100%",
+        height: "840px",
+        backgroundColor: "inherit",
+      }}
+    >
+      <Box
+        sx={{
+          mt: 3,
+          width: "100%",
+        }}
+      >
+        <LoadingIcon color="primary" />
+      </Box>
+    </Card>
   ) : (
     <Card
       sx={{
@@ -89,6 +135,14 @@ export const ProfileInfo: FC = (props) => {
           startAdornment: (
             <InputAdornment position="start">
               <SearchIcon fontSize="large" />
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end">
+              <AddComment
+                onClick={() => setNewChatDialogVisibility(true)}
+                fontSize="large"
+              />
             </InputAdornment>
           ),
         }}
@@ -108,12 +162,21 @@ export const ProfileInfo: FC = (props) => {
       })}
 
       <TableContainer>
-        <Table>
+        <Table
+          sx={{
+            overflow: "scroll",
+          }}
+        >
           <TableBody>
             {getFilteredChats().map((chat: any) => {
               const isChatSelected = selectedChat === chat.name;
               return (
-                <TableRow key={chat.name} selected={isChatSelected}>
+                <TableRow
+                  key={chat.name}
+                  selected={isChatSelected}
+                  className="chat"
+                  sx={{ cursor: "pointer" }}
+                >
                   <TableCell
                     key={chat.name}
                     onClick={() => handleSelectChat(chat.name)}

@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 
 import {
   Card,
@@ -32,40 +32,16 @@ export const GET_CHATS = gql`
   }
 `;
 
-export const CREATE_CHAT = gql`
-  mutation createChat($createChatInput: CreateChatInput) {
-    createChat(createChatInput: $createChatInput) {
-      name
-      users
-      createdAt
-    }
-  }
-`;
-
 export const ChatsTable: FC = (props) => {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
 
   // To get all user's chats.
-  const { loading, error, data } = useQuery(GET_CHATS, {
+  const { loading, error, data, refetch } = useQuery(GET_CHATS, {
     onError({ graphQLErrors }: any) {
       setErrors(graphQLErrors);
     },
     variables: { userName: context.user.username },
-  });
-
-  // To create a new chat
-  const [newChatData, setNewChatData] = useState<{
-    name: String;
-    users: String[];
-  }>({ name: "", users: [] });
-  const [createChat] = useMutation(CREATE_CHAT, {
-    variables: {
-      createChatInput: {
-        users: newChatData.users,
-        name: newChatData.name,
-      },
-    },
   });
 
   // Filtering state management
@@ -97,7 +73,6 @@ export const ChatsTable: FC = (props) => {
 
   const handleSelectChat = (chat_id: string): void => {
     context.setCurrentChat(chat_id);
-    console.log(chat_id);
     setSelectedChat(chat_id);
     chat_id === "No chats found." && setSelectedChat("");
   };
@@ -130,6 +105,13 @@ export const ChatsTable: FC = (props) => {
       }}
       {...props}
     >
+      <NewChatDialog
+        visible={newChatDialogVisibility}
+        visibilityHandler={setNewChatDialogVisibility}
+        updater={refetch}
+        onConfirm={null}
+      />
+
       <TextField
         InputProps={{
           startAdornment: (
@@ -142,6 +124,7 @@ export const ChatsTable: FC = (props) => {
               <AddComment
                 onClick={() => setNewChatDialogVisibility(true)}
                 fontSize="large"
+                cursor="pointer"
               />
             </InputAdornment>
           ),

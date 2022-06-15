@@ -118,14 +118,18 @@ export const ChatMessages: FC = (props) => {
   };
 
   const isAtBottom = () => {
-    let lastTr = tableRef.current.rows[tableRef.current.rows.length - 1];
-    const top = lastTr.getBoundingClientRect().top;
-    setShowGoToBottom(
-      !(
-        top + lastTr.offsetHeight >= 0 &&
-        top - lastTr.offsetHeight <= window.innerHeight
-      )
-    );
+    if (tableRef.current) {
+      let lastTr = tableRef.current.rows[tableRef.current.rows.length - 1];
+      const top = lastTr.getBoundingClientRect().top;
+      setShowGoToBottom(
+        !(
+          top + lastTr.offsetHeight >= 0 &&
+          top - lastTr.offsetHeight <= window.innerHeight
+        )
+      );
+      return;
+    }
+    setShowGoToBottom(false);
   };
 
   return loadingMsgs ? (

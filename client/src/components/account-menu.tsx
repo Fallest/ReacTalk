@@ -36,8 +36,19 @@ export default function AccountMenu() {
 
   return (
     <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Typography>{context.user.username}</Typography>
+      <Box
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexFlow: "row",
+          alignItems: "center",
+          justifyItems: "center",
+          mr: 3,
+        }}
+      >
+        <Typography variant="body2" fontSize="20px">
+          {context.user.username}
+        </Typography>
         <IconButton
           onClick={handleClick}
           size="small"

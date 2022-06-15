@@ -80,19 +80,10 @@
     animation: load-message-sender 1s forwards 0.5s;
   }
   .load-message-content {
-    animation: load-message-content 2s forwards 0.5s;
-    transition-property: margin-right;
-    transition-duration: 2s;
-    transition-timing-function: ease-in-out;
+    animation: load-message-content 1s forwards 0.5s;
   }
   .load-message-timestamp {
     animation: load-message-timestamp 1s forwards 0.5s;
-    transition-property: margin-right;
-    transition-duration: 1s;
-    transition-timing-function: ease-in-out;
-  }
-  .chat-name {
-    animation: chat-name-appear 1 1s forwards;
   }
 }
 
@@ -110,12 +101,10 @@
   from {
     color: transparent;
     background-color: inherit;
-    margin-right: -500px;
   }
   to {
     color: white;
     background-color: inherit;
-    margin-right: 0;
   }
 }
 
@@ -123,23 +112,10 @@
   from {
     color: transparent;
     background-color: transparent;
-    margin-right: 100px;
   }
   to {
     color: gray;
     background-color: inherit;
-    margin-right: 0;
-  }
-}
-
-@keyframes chat-name-appear {
-  from {
-    color: transparent;
-    margin-left: -50px;
-  }
-  to {
-    color: white;
-    margin-left: 0;
   }
 }
 

@@ -51,12 +51,3 @@ Users, when leaving a chat, will be prompted of who they will
 be invited to access those chats, so that no spam ocurrs. For the
 same reason, a user can decide to only receive chat invites from
 people they know.
-
-Ids:
-Chat 1: 62a616a996753304bd7e05a9
-Chat 2: 62a6177796753304bd7e05ae
-
-Users:
-Delmer: 6299da665f113c15ec30d943
-David: 628ee1aa35d22b3795099b33
-Estren: 62a6175e96753304bd7e05ac
